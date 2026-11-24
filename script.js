@@ -3,6 +3,8 @@ const dots = document.querySelector("#dots");
 const counter = document.querySelector("#counter");
 const progressBar = document.querySelector("#progressBar");
 let current = 0;
+let programmaticNavigation = false;
+let navigationTimer;
 
 slides.forEach((slide, index) => {
   const dot = document.createElement("button");
@@ -14,7 +16,14 @@ slides.forEach((slide, index) => {
 
 function goTo(index) {
   current = Math.max(0, Math.min(index, slides.length - 1));
+  programmaticNavigation = true;
+  window.clearTimeout(navigationTimer);
   slides[current].scrollIntoView({ behavior: "smooth", block: "start" });
+  updateProgress();
+  navigationTimer = window.setTimeout(() => { programmaticNavigation = false; }, 1600);
+}
+
+function updateProgress() {
   document.querySelectorAll(".dots button").forEach((dot, i) => dot.classList.toggle("active", i === current));
   counter.textContent = `${String(current + 1).padStart(2, "0")} / ${String(slides.length).padStart(2, "0")}`;
   progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
@@ -29,6 +38,7 @@ document.querySelector("#fullscreen").addEventListener("click", async () => {
   else await document.documentElement.requestFullscreen();
 });
 document.addEventListener("keydown", (event) => {
+  if (event.target instanceof HTMLElement && event.target.closest("button, a, input, textarea, select, video, [contenteditable='true']")) return;
   if (event.key === "ArrowRight" || event.key === "PageDown" || event.key === " ") {
     event.preventDefault();
     goTo(current + 1);
@@ -41,147 +51,143 @@ document.addEventListener("keydown", (event) => {
 });
 
 const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) goTo(Number(entry.target.dataset.slide));
-  });
+  if (programmaticNavigation) return;
+  const visibleSlide = entries
+    .filter((entry) => entry.isIntersecting)
+    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (!visibleSlide) return;
+  current = Number(visibleSlide.target.dataset.slide);
+  updateProgress();
 }, { threshold: 0.58 });
 slides.forEach((slide) => observer.observe(slide));
 
 const missionStages = [
   {
-    title: "Reconoce las evidencias",
-    hint: "Forma el recorrido colocando cada elemento en el orden en que se aprende.",
-    cards: [
-      { id: "lugar", code: "A", name: "Zona arqueológica" },
-      { id: "historia", code: "B", name: "Construcción por etapas" },
-      { id: "proteccion", code: "C", name: "Acciones de conservación" }
-    ],
-    answer: ["lugar", "historia", "proteccion"]
+    type: "REGISTRO FOTOGRÁFICO",
+    image: "assets/escalera-piramide.jpg",
+    alt: "Escalinata y niveles de la pirámide de Cholula",
+    caption: "Observa la escalinata y las plataformas: ¿qué te dicen sobre la construcción?",
+    title: "¿Qué revela la forma escalonada?",
+    prompt: "Elige la interpretación que mejor coincide con la evidencia.",
+    options: [
+      { text: "La pirámide tuvo distintas etapas de construcción.", correct: true, feedback: "Exacto. Las ampliaciones sucesivas formaron el gran basamento que vemos hoy." },
+      { text: "Toda la estructura se hizo en una sola etapa.", correct: false, feedback: "La imagen muestra una estructura compleja; la pirámide se amplió en distintas etapas." },
+      { text: "La forma actual es solo una montaña natural.", correct: false, feedback: "El nombre alude a un cerro, pero el basamento es una obra construida y ampliada por personas." }
+    ]
   },
   {
-    title: "Explica qué observaste",
-    hint: "Ordena los resultados de la visita: espacio, detalle y experiencia.",
-    cards: [
-      { id: "detalle", code: "A", name: "Cabeza tallada" },
-      { id: "espacio", code: "B", name: "Patios y estructuras" },
-      { id: "sonido", code: "C", name: "Palmadas y resonancia" }
-    ],
-    answer: ["espacio", "detalle", "sonido"]
+    type: "DETALLE ARQUEOLÓGICO",
+    image: "assets/arqueologia-cabeza-serpiente.jpg",
+    alt: "Piezas de piedra tallada dentro de la zona arqueológica",
+    caption: "La fotografía registra piezas talladas resguardadas dentro del sitio.",
+    title: "¿Qué podemos afirmar con seguridad?",
+    prompt: "Practica observar antes de interpretar: elige una conclusión responsable.",
+    options: [
+      { text: "Son piezas de piedra tallada; la foto sola no confirma su nombre ni significado.", correct: true, feedback: "Muy bien. Describir lo visible y reconocer lo que falta verificar evita inventar una historia." },
+      { text: "La pieza representa con certeza a una deidad específica.", correct: false, feedback: "No podemos confirmar la identidad solo con esta fotografía; hace falta una fuente arqueológica." },
+      { text: "Es una escultura moderna sin relación con el sitio.", correct: false, feedback: "La imagen la muestra dentro del conjunto arqueológico. Evitemos afirmar algo que la evidencia no respalda." }
+    ]
   },
   {
-    title: "Defiende el patrimonio",
-    hint: "Selecciona primero la acción responsable y luego las consecuencias.",
-    cards: [
-      { id: "consecuencia", code: "A", name: "Protege para futuras visitas" },
-      { id: "accion", code: "B", name: "Respetar rutas y indicaciones" },
-      { id: "comprension", code: "C", name: "Conocer antes de opinar" }
-    ],
-    answer: ["comprension", "accion", "consecuencia"]
+    type: "EXPERIENCIA SONORA · VIDEO PROPIO",
+    video: true,
+    caption: "En el video, una palmada produce una respuesta sonora que recuerda al graznido de un pato.",
+    title: "¿Cuál es la conclusión más cuidadosa?",
+    prompt: "Mira y escucha la grabación antes de responder.",
+    options: [
+      { text: "El efecto se escucha; para explicar su causa exacta necesitamos investigar más.", correct: true, feedback: "¡Expediente completo! Registraste el efecto sin confundir una observación con una explicación ya comprobada." },
+      { text: "El sonido demuestra que el sitio fue construido para imitar patos.", correct: false, feedback: "El video muestra un efecto sonoro, pero no demuestra la intención histórica ni el diseño acústico." },
+      { text: "La grabación prueba que hay un pato escondido.", correct: false, feedback: "En el video no vemos un pato: oímos una respuesta acústica parecida a su graznido." }
+    ]
   }
 ];
 let missionIndex = 0;
-let selected = [];
+let evidenceScore = 0;
+let answered = false;
 
 const missionCount = document.querySelector("#missionCount");
 const missionTitle = document.querySelector("#missionTitle");
-const missionHint = document.querySelector("#missionHint");
-const missionSteps = document.querySelector("#missionSteps");
-const cardBank = document.querySelector("#cardBank");
-const dropZone = document.querySelector("#dropZone");
+const missionPrompt = document.querySelector("#missionPrompt");
+const missionStep = document.querySelector("#missionStep");
+const answerOptions = document.querySelector("#answerOptions");
 const missionFeedback = document.querySelector("#missionFeedback");
 const missionReset = document.querySelector("#missionReset");
+const missionNext = document.querySelector("#missionNext");
+const missionPoints = document.querySelector("#missionPoints");
+const missionProgressText = document.querySelector("#missionProgressText");
+const evidenceType = document.querySelector("#evidenceType");
+const evidenceImage = document.querySelector("#evidenceImage");
+const evidenceVideo = document.querySelector("#evidenceVideo");
+const viewerCaption = document.querySelector("#viewerCaption");
+const scanLabel = document.querySelector("#scanLabel");
+const scanTarget = document.querySelector(".scan-target");
 
 function renderMission() {
   const stage = missionStages[missionIndex];
-  selected = [];
-  missionCount.textContent = `SECUENCIA ${String(missionIndex + 1).padStart(2, "0")} / 03`;
+  answered = false;
+  missionCount.textContent = `EVIDENCIA ${String(missionIndex + 1).padStart(2, "0")} / 03`;
+  missionPoints.textContent = `ARCHIVO ${evidenceScore} / 3`;
+  missionProgressText.textContent = `${missionIndex} de 3 evidencias analizadas`;
+  missionStep.textContent = `RETO 0${missionIndex + 1} · ${missionIndex === 2 ? "ESCUCHA" : "OBSERVA"}`;
   missionTitle.textContent = stage.title;
-  missionHint.textContent = stage.hint;
+  missionPrompt.textContent = stage.prompt;
+  evidenceType.textContent = stage.type;
+  viewerCaption.textContent = stage.caption;
   missionFeedback.textContent = "";
-  dropZone.innerHTML = "<span>Arrastra aquí una tarjeta</span>";
-  [...missionSteps.children].forEach((step, index) => {
-    step.className = index === missionIndex ? "active" : index < missionIndex ? "done" : "";
-  });
-  cardBank.innerHTML = "";
-  stage.cards.forEach((card) => {
+  missionNext.classList.add("hidden");
+  evidenceVideo.pause();
+  evidenceVideo.currentTime = 0;
+  evidenceVideo.hidden = !stage.video;
+  evidenceImage.hidden = Boolean(stage.video);
+  scanTarget.hidden = Boolean(stage.video);
+  scanLabel.hidden = Boolean(stage.video);
+  if (!stage.video) {
+    evidenceImage.src = stage.image;
+    evidenceImage.alt = stage.alt;
+    scanLabel.textContent = missionIndex === 0 ? "NIVELES CONSTRUCTIVOS DETECTADOS" : "PIEZAS TALLADAS DETECTADAS";
+  }
+  answerOptions.innerHTML = "";
+  stage.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.draggable = true;
-    button.dataset.id = card.id;
-    button.innerHTML = `<span>${card.code} / TARJETA</span>${card.name}`;
-    button.addEventListener("click", () => addCard(card.id));
-    button.addEventListener("dragstart", (event) => event.dataTransfer.setData("text/plain", card.id));
-    cardBank.append(button);
+    button.innerHTML = `<span>${String.fromCharCode(65 + index)}</span>${option.text}`;
+    button.addEventListener("click", () => answerMission(option, button));
+    answerOptions.append(button);
   });
 }
 
-function addCard(id) {
-  if (selected.includes(id)) return;
-  selected.push(id);
-  const stage = missionStages[missionIndex];
-  const card = stage.cards.find((item) => item.id === id);
-  const bankCard = cardBank.querySelector(`[data-id="${id}"]`);
-  if (bankCard) bankCard.classList.add("used");
-  if (dropZone.querySelector(":scope > span")) dropZone.innerHTML = "";
-  const selectedCard = document.createElement("button");
-  selectedCard.type = "button";
-  selectedCard.dataset.id = id;
-  selectedCard.textContent = card.name;
-  selectedCard.addEventListener("click", () => removeCard(id));
-  dropZone.append(selectedCard);
-  if (selected.length === stage.answer.length) validateMission();
-}
-
-function removeCard(id) {
-  selected = selected.filter((item) => item !== id);
-  const zoneCard = dropZone.querySelector(`[data-id="${id}"]`);
-  if (zoneCard) zoneCard.remove();
-  const bankCard = cardBank.querySelector(`[data-id="${id}"]`);
-  if (bankCard) bankCard.classList.remove("used");
-  if (!selected.length) dropZone.innerHTML = "<span>Arrastra aquí una tarjeta</span>";
-  missionFeedback.textContent = "";
-}
-
-function validateMission() {
-  const stage = missionStages[missionIndex];
-  const correct = stage.answer.every((id, index) => selected[index] === id);
-  if (!correct) {
-    missionFeedback.textContent = "Secuencia incompleta. Cambia el orden tocando las tarjetas seleccionadas.";
-    selected.forEach((id) => {
-      const bankCard = cardBank.querySelector(`[data-id="${id}"]`);
-      if (bankCard) bankCard.classList.remove("used");
-    });
-    [...dropZone.querySelectorAll("button")].forEach((button) => button.remove());
-    selected = [];
-    return;
-  }
-  missionFeedback.textContent = missionIndex === missionStages.length - 1
-    ? "Misión completa: observaste, explicaste y defendiste el patrimonio."
-    : "Secuencia correcta. Avanza a la siguiente misión.";
-  if (missionIndex < missionStages.length - 1) {
-    window.setTimeout(() => {
-      missionIndex += 1;
-      renderMission();
-    }, 1150);
+function answerMission(option, selectedButton) {
+  if (answered) return;
+  if (option.correct) {
+    answered = true;
+    evidenceScore += 1;
+    selectedButton.classList.add("correct");
+    missionFeedback.textContent = option.feedback;
+    missionPoints.textContent = `ARCHIVO ${evidenceScore} / 3`;
+    missionProgressText.textContent = `${missionIndex + 1} de 3 evidencias analizadas`;
+    missionNext.textContent = missionIndex === missionStages.length - 1 ? "Revisar expediente ↻" : "Siguiente evidencia →";
+    missionNext.classList.remove("hidden");
+    answerOptions.querySelectorAll("button").forEach((button) => { button.disabled = true; });
   } else {
-    missionSteps.querySelectorAll("i").forEach((step) => step.className = "done");
+    selectedButton.classList.add("incorrect");
+    missionFeedback.textContent = `${option.feedback} Prueba otra respuesta.`;
+    window.setTimeout(() => selectedButton.classList.remove("incorrect"), 700);
   }
 }
 
-dropZone.addEventListener("dragover", (event) => event.preventDefault());
-dropZone.addEventListener("drop", (event) => {
-  event.preventDefault();
-  addCard(event.dataTransfer.getData("text/plain"));
+missionNext.addEventListener("click", () => {
+  if (missionIndex === missionStages.length - 1) {
+    missionIndex = 0;
+    evidenceScore = 0;
+  } else {
+    missionIndex += 1;
+  }
+  renderMission();
 });
 missionReset.addEventListener("click", () => {
   missionIndex = 0;
+  evidenceScore = 0;
   renderMission();
-});
-
-document.querySelectorAll(".chat-options button").forEach((button) => {
-  button.addEventListener("click", () => {
-    document.querySelector("#chatAnswer").textContent = button.dataset.answer;
-  });
 });
 
 goTo(0);

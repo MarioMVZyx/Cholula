@@ -45,7 +45,7 @@
             <div class="context-copy">
               <p class="lead">Cholula es un territorio donde conviven la arquitectura prehispánica, el paisaje colonial y la vida actual. Su historia no pertenece solo al pasado: continúa en cada visita, tradición y forma de cuidar el lugar.</p>
               <div class="data-strip">
-                <article><strong>2,300+</strong><span>Años de<br />historia</span></article>
+                <article><strong>2,500+</strong><span>Años de<br />ocupación urbana</span></article>
                 <article><strong>400 m</strong><span>Medida aproximada<br />de la base</span></article>
                 <article><strong>4</strong><span>Épocas visibles<br />en el paisaje</span></article>
               </div>
@@ -73,7 +73,7 @@
             <div class="station-panel">
               <div class="panel-tabs"><span class="active">Lugar</span><span>Historia</span><span>Cultura</span></div>
               <h3>El cerro hecho a mano</h3>
-              <p><strong>Tlachihualtépetl</strong> significa “cerro hecho a mano”. La pirámide fue ampliada en distintas etapas. Por eso, al recorrerla podemos ver cómo varias generaciones construyeron sobre una misma ciudad sagrada.</p>
+              <p><strong>Tlachihualtépetl</strong> se interpreta como “cerro artificial” o “cerro hecho a mano”. La pirámide fue ampliada en distintas etapas. El INAH registra vestigios de ocupación desde antes del primer milenio antes de nuestra era y una población claramente establecida hacia el siglo VI a. C.</p>
               <div class="station-facts">
                 <article><span>01</span><div><strong>Características</strong><p>Patios ceremoniales, altares, escalones y túneles.</p></div></article>
                 <article><span>02</span><div><strong>Importancia cultural</strong><p>Guarda la memoria de una ciudad de intercambio y ritual.</p></div></article>
@@ -94,7 +94,7 @@
           <div class="evidence-grid">
             <figure>
               <img src="assets/arqueologia-cabeza-serpiente.jpg" alt="Cabeza tallada y elementos arqueológicos mostrados al público" />
-              <figcaption><strong>Detalle tallado</strong><br />Escultura protectora y evidencia de trabajo artesanal.</figcaption>
+              <figcaption><strong>Detalle tallado</strong><br />Piezas líticas observadas durante la visita. No les asigno un nombre sin verificar su cédula.</figcaption>
             </figure>
             <figure>
               <img src="assets/templete-piramide.jpg" alt="Templete construido sobre una estructura arqueológica" />
@@ -113,27 +113,38 @@
       <section class="slide activity-slide" data-slide="4" aria-label="Actividad interactiva">
         <div class="slide-shell activity-shell">
           <header class="section-heading compact">
-            <p><span>04</span> Actividad con IA</p>
-            <h2>Reconstruye<br /><em>la visita</em></h2>
+            <p><span>04</span> Reto interactivo · Expediente de campo</p>
+            <h2>Expediente <em>arqueológico</em></h2>
           </header>
-          <div class="mission-console">
-            <aside>
-              <div class="console-status"><span></span> MISIÓN ACTIVA</div>
-              <p id="missionCount">SECUENCIA 01 / 03</p>
-              <h3 id="missionTitle">¿Qué elemento encontramos primero?</h3>
-              <p id="missionHint">Elige las tarjetas en el orden correcto.</p>
-              <div class="steps" id="missionSteps"><i class="active"></i><i></i><i></i></div>
-              <button class="console-reset" id="missionReset">Reiniciar misión</button>
-            </aside>
-            <div class="mission-workspace">
-              <div class="workspace-label">Tarjetas disponibles</div>
-              <div class="card-bank" id="cardBank"></div>
-              <div class="workspace-label">Secuencia reconstruida</div>
-              <div class="drop-zone" id="dropZone" aria-live="polite">
-                <span>Arrastra aquí una tarjeta</span>
-              </div>
-              <p class="mission-feedback" id="missionFeedback" aria-live="polite"></p>
+          <div class="field-mission">
+            <div class="mission-topline">
+              <span><i></i> MODO EXPLORACIÓN</span>
+              <span id="missionCount">EVIDENCIA 01 / 03</span>
+              <span class="mission-points" id="missionPoints">ARCHIVO 0 / 3</span>
             </div>
+            <div class="field-grid">
+              <div class="evidence-viewer">
+                <div class="viewer-toolbar"><span id="evidenceType">REGISTRO FOTOGRÁFICO</span><span>VISIÓN · ANÁLISIS</span></div>
+                <div class="viewer-media" id="viewerMedia">
+                  <img id="evidenceImage" src="assets/escalera-piramide.jpg" alt="Escalinata y niveles de la pirámide de Cholula" />
+                  <span class="scan-target" aria-hidden="true">+</span>
+                  <div class="scan-label" id="scanLabel">SEÑAL ARQUEOLÓGICA DETECTADA</div>
+                  <video id="evidenceVideo" controls preload="none" playsinline poster="assets/templete-piramide.jpg" hidden>
+                    <source src="assets/palmadas-arqueologia.mp4" type="video/mp4" />
+                  </video>
+                </div>
+                <p class="viewer-caption" id="viewerCaption">Observa las líneas de la estructura y sus distintos niveles.</p>
+              </div>
+              <div class="question-console">
+                <p class="mission-step" id="missionStep">RETO 01 · OBSERVA</p>
+                <h3 id="missionTitle">¿Qué revela la forma escalonada?</h3>
+                <p class="mission-prompt" id="missionPrompt">Elige la interpretación que mejor coincide con la evidencia.</p>
+                <div class="answer-options" id="answerOptions"></div>
+                <p class="mission-feedback" id="missionFeedback" aria-live="polite"></p>
+                <button class="cyber-button hidden" id="missionNext">Siguiente evidencia <span>→</span></button>
+              </div>
+            </div>
+            <div class="mission-bottom"><span id="missionProgressText">0 de 3 evidencias analizadas</span><button class="console-reset" id="missionReset">Reiniciar expediente ↻</button></div>
           </div>
         </div>
       </section>
@@ -142,29 +153,35 @@
         <div class="slide-shell">
           <header class="section-heading compact">
             <p><span>05</span> Cholula explicada con IA</p>
-            <h2>Cholli, <em>guía digital</em></h2>
+            <h2>La IA como<br /><em>herramienta de visita</em></h2>
           </header>
-          <div class="cholli-layout">
-            <div class="chat-console">
-              <div class="chat-head"><span class="ai-dot"></span> CHOLLI / ASISTENTE ARQUEOLÓGICO <b>EN LÍNEA</b></div>
-              <div class="chat-message bot"><span>CH</span><p>Hola. Puedo ayudarte a explicar el recorrido. ¿Qué quieres descubrir?</p></div>
-              <div class="chat-options">
-                <button data-answer="Tlachihualtépetl significa «cerro hecho a mano» y describe una pirámide construida mediante ampliaciones sucesivas.">¿Qué significa Tlachihualtépetl?</button>
-                <button data-answer="Un templete, una cubierta moderna y rutas señalizadas ayudan a proteger estructuras arqueológicas sin ocultar su historia.">¿Qué protege el patrimonio?</button>
-                <button data-answer="El efecto depende de la forma cerrada del espacio: las superficies reflejan y entremezclan las ondas sonoras.">¿Por qué suena como pato?</button>
-              </div>
-              <p class="chat-answer" id="chatAnswer" aria-live="polite">Selecciona una pregunta para mostrar la respuesta.</p>
-            </div>
-            <aside class="ethics-card">
-              <p>PRINCIPIO DE USO</p>
-              <strong>La IA propone.<br />La persona verifica.</strong>
-              <ul>
-                <li>Contrasta datos.</li>
-                <li>Reconoce la herramienta.</li>
-                <li>Protege imágenes y rostros.</li>
-                <li>Respeta la cultura.</li>
-              </ul>
-            </aside>
+          <p class="ai-intro">En este proyecto la inteligencia artificial fue un apoyo para organizar ideas, mejorar la redacción y crear recursos de aprendizaje. No reemplazó la visita ni la verificación humana.</p>
+          <div class="ai-panels">
+            <article class="ai-panel">
+              <span class="ai-index">01 / APORTACIÓN</span>
+              <h3>¿En qué puede ayudar?</h3>
+              <p>Puede convertir información extensa en explicaciones breves, sugerir preguntas para una visita y ayudar a diseñar una experiencia interactiva.</p>
+              <div class="ai-example"><small>EN ESTA GUÍA</small><strong>La actividad organiza tus evidencias en tres retos de observación.</strong></div>
+            </article>
+            <article class="ai-panel">
+              <span class="ai-index">02 / VERIFICACIÓN</span>
+              <h3>¿Cómo se comprueba?</h3>
+              <p>Compara cada afirmación con fuentes institucionales y con lo que realmente se observó. Si un detalle no está confirmado, se describe con cautela.</p>
+              <div class="verification-flow"><span>Respuesta IA</span><b>→</b><span>Contraste</span><b>→</b><span>Versión revisada</span></div>
+            </article>
+            <article class="ai-panel">
+              <span class="ai-index">03 / LÍMITES</span>
+              <h3>¿Qué no debe hacer?</h3>
+              <p>No inventar el nombre o significado de una escultura, ni presentar como hecho una explicación del sonido que todavía no se ha verificado.</p>
+              <div class="ai-example caution"><small>REGLA DE ORO</small><strong>La IA puede equivocarse aunque su respuesta parezca convincente.</strong></div>
+            </article>
+          </div>
+          <div class="ai-note"><span class="ai-dot"></span><p><strong>Sobre el chatbot:</strong> este sitio está alojado como página estática. Un chatbot generativo real necesita un servicio de servidor y una clave privada protegida; incluir un token aquí lo expondría públicamente. Por eso no se presenta una simulación como si fuera IA en vivo.</p></div>
+          <div class="source-links"><span>FUENTE INSTITUCIONAL</span><a href="https://www.inah.gob.mx/zonas/zona-arqueologica-de-cholula" target="_blank" rel="noreferrer">INAH · Zona Arqueológica de Cholula ↗</a><a href="https://lugares.inah.gob.mx/es/node/4336" target="_blank" rel="noreferrer">INAH · Historia de Cholula ↗</a></div>
+          <div class="ai-questions">
+            <details><summary>¿Qué riesgos existen al usar IA para investigar historia?</summary><p>Puede mezclar épocas, inventar datos o repetir sesgos. Se reduce ese riesgo revisando con fuentes confiables, separando hechos de interpretaciones y señalando lo que no se sabe.</p></details>
+            <details><summary>¿Cómo cuidé imágenes y datos personales?</summary><p>Las fotografías de esta guía son evidencias de la visita. Antes de publicar fotos de otras personas, se debe pedir permiso y evitar divulgar rostros o datos que las identifiquen.</p></details>
+            <details><summary>¿Cómo puede ayudar a conservar el patrimonio?</summary><p>Puede acercar la historia a más personas, apoyar traducciones y crear materiales educativos. Su aporte es positivo si difunde información verificada y promueve el respeto al sitio.</p></details>
           </div>
         </div>
       </section>
@@ -177,11 +194,11 @@
           </header>
           <div class="ethics-grid">
             <article><span>01</span><h3>Herramienta y propósito</h3><p>Utilicé IA generativa para organizar ideas, mejorar la redacción y diseñar recursos interactivos. Mi investigación y decisión final fueron propias.</p></article>
-            <article><span>02</span><h3>Verificación</h3><p>Contraste datos con el INAH, fuentes oficiales de turismo y información observada durante la visita.</p></article>
+            <article><span>02</span><h3>Verificación</h3><p>Contrasté datos con el INAH, fuentes oficiales de turismo y la información observada durante la visita.</p></article>
             <article><span>03</span><h3>Riesgos</h3><p>La IA puede inventar fechas, nombres o explicaciones. Por eso no publiqué ninguna información sin verificarla.</p></article>
             <article><span>04</span><h3>Cuidado personal</h3><p>Usé fotografías propias, evité publicar rostros identificables sin permiso y reconocí qué parte del texto tuvo apoyo de IA.</p></article>
           </div>
-          <div class="correction"><span>Dato corregido</span><p>Se verificó que Tlachihualtépetl hace referencia al cerro hecho a mano y que la pirámide es el resultado de ampliaciones sucesivas, no de una sola construcción.</p></div>
+          <div class="correction"><span>Dato precisado</span><p>El INAH ofrece las interpretaciones “cerro artificial” o “cerro hechizo” para Tlachihualtépetl. Por eso uso “cerro hecho a mano” como una forma explicativa, no como cita literal única.</p></div>
         </div>
       </section>
 
