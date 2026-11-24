@@ -61,134 +61,150 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.58 });
 slides.forEach((slide) => observer.observe(slide));
 
-const missionStages = [
+const preservationCases = [
   {
-    type: "REGISTRO FOTOGRÁFICO",
-    image: "assets/escalera-piramide.jpg",
-    alt: "Escalinata y niveles de la pirámide de Cholula",
-    caption: "Observa la escalinata y las plataformas: ¿qué te dicen sobre la construcción?",
-    title: "¿Qué revela la forma escalonada?",
-    prompt: "Elige la interpretación que mejor coincide con la evidencia.",
+    type: "VISITA",
+    instruction: "PROTOCOLO 01 · PREVENIR",
+    title: "Un visitante se acerca para tocar un muro antiguo.",
+    description: "Elige una acción que cuide la estructura y mantenga la visita segura.",
     options: [
-      { text: "La pirámide tuvo distintas etapas de construcción.", correct: true, feedback: "Exacto. Las ampliaciones sucesivas formaron el gran basamento que vemos hoy." },
-      { text: "Toda la estructura se hizo en una sola etapa.", correct: false, feedback: "La imagen muestra una estructura compleja; la pirámide se amplió en distintas etapas." },
-      { text: "La forma actual es solo una montaña natural.", correct: false, feedback: "El nombre alude a un cerro, pero el basamento es una obra construida y ampliada por personas." }
+      { text: "Cruzar la cuerda para tocar la piedra.", correct: false, feedback: "Tocar o salir del sendero puede desgastar superficies y acercar al visitante a un área restringida." },
+      { text: "Mantener la distancia y avisar al personal si hace falta.", correct: true, feedback: "Buena decisión. Respetar límites ayuda a prevenir daños accidentales y mantiene el recorrido seguro." },
+      { text: "Marcar la piedra para recordar el lugar.", correct: false, feedback: "Las marcas alteran el patrimonio. Es mejor observar, fotografiar desde la zona permitida y pedir orientación." }
     ]
   },
   {
-    type: "DETALLE ARQUEOLÓGICO",
-    image: "assets/arqueologia-cabeza-serpiente.jpg",
-    alt: "Piezas de piedra tallada dentro de la zona arqueológica",
-    caption: "La fotografía registra piezas talladas resguardadas dentro del sitio.",
-    title: "¿Qué podemos afirmar con seguridad?",
-    prompt: "Practica observar antes de interpretar: elige una conclusión responsable.",
+    type: "HALLAZGO",
+    instruction: "PROTOCOLO 02 · DOCUMENTAR",
+    title: "Encuentras un fragmento de piedra sin identificación.",
+    description: "Es una situación hipotética. ¿Qué harías para no perder información ni dañar el objeto?",
     options: [
-      { text: "Son piezas de piedra tallada; la foto sola no confirma su nombre ni significado.", correct: true, feedback: "Muy bien. Describir lo visible y reconocer lo que falta verificar evita inventar una historia." },
-      { text: "La pieza representa con certeza a una deidad específica.", correct: false, feedback: "No podemos confirmar la identidad solo con esta fotografía; hace falta una fuente arqueológica." },
-      { text: "Es una escultura moderna sin relación con el sitio.", correct: false, feedback: "La imagen la muestra dentro del conjunto arqueológico. Evitemos afirmar algo que la evidencia no respalda." }
+      { text: "Levantarlo y guardarlo como recuerdo.", correct: false, feedback: "Mover un objeto de su contexto puede dañarlo y hacer que se pierda información sobre dónde estaba." },
+      { text: "Adivinar su antigüedad y publicarla como un hecho.", correct: false, feedback: "Sin análisis, la fecha y el uso serían especulaciones. No presentes una suposición como dato comprobado." },
+      { text: "No moverlo; avisar al personal del sitio.", correct: true, feedback: "Correcto. Dejarlo en su lugar y avisar permite que personal capacitado evalúe el hallazgo." }
     ]
   },
   {
-    type: "EXPERIENCIA SONORA · VIDEO PROPIO",
-    video: true,
-    caption: "En el video, una palmada produce una respuesta sonora que recuerda al graznido de un pato.",
-    title: "¿Cuál es la conclusión más cuidadosa?",
-    prompt: "Mira y escucha la grabación antes de responder.",
+    type: "INTERPRETACIÓN",
+    instruction: "PROTOCOLO 03 · DISTINGUIR",
+    title: "Una palmada produce un sonido parecido a un pato.",
+    description: "¿Qué puedes comunicar responsablemente a otras personas?",
     options: [
-      { text: "El efecto se escucha; para explicar su causa exacta necesitamos investigar más.", correct: true, feedback: "¡Expediente completo! Registraste el efecto sin confundir una observación con una explicación ya comprobada." },
-      { text: "El sonido demuestra que el sitio fue construido para imitar patos.", correct: false, feedback: "El video muestra un efecto sonoro, pero no demuestra la intención histórica ni el diseño acústico." },
-      { text: "La grabación prueba que hay un pato escondido.", correct: false, feedback: "En el video no vemos un pato: oímos una respuesta acústica parecida a su graznido." }
+      { text: "El sonido se escucha; su causa exacta requiere investigarse.", correct: true, feedback: "¡Misión cumplida! Separaste lo que se observa de una explicación que aún necesita comprobarse." },
+      { text: "El sitio fue construido para imitar el sonido de un pato.", correct: false, feedback: "La grabación no demuestra la intención de quienes construyeron el sitio." },
+      { text: "Hay un pato oculto en la zona.", correct: false, feedback: "El sonido se parece a un graznido, pero eso no demuestra que haya un pato." }
     ]
   }
 ];
-let missionIndex = 0;
-let evidenceScore = 0;
-let answered = false;
 
-const missionCount = document.querySelector("#missionCount");
-const missionTitle = document.querySelector("#missionTitle");
-const missionPrompt = document.querySelector("#missionPrompt");
-const missionStep = document.querySelector("#missionStep");
-const answerOptions = document.querySelector("#answerOptions");
-const missionFeedback = document.querySelector("#missionFeedback");
-const missionReset = document.querySelector("#missionReset");
-const missionNext = document.querySelector("#missionNext");
-const missionPoints = document.querySelector("#missionPoints");
-const missionProgressText = document.querySelector("#missionProgressText");
-const evidenceType = document.querySelector("#evidenceType");
-const evidenceImage = document.querySelector("#evidenceImage");
-const evidenceVideo = document.querySelector("#evidenceVideo");
-const viewerCaption = document.querySelector("#viewerCaption");
-const scanLabel = document.querySelector("#scanLabel");
-const scanTarget = document.querySelector(".scan-target");
+let caseIndex = 0;
+let siteIntegrity = 100;
+let caseResolved = false;
+let gameFinished = false;
 
-function renderMission() {
-  const stage = missionStages[missionIndex];
-  answered = false;
-  missionCount.textContent = `EVIDENCIA ${String(missionIndex + 1).padStart(2, "0")} / 03`;
-  missionPoints.textContent = `ARCHIVO ${evidenceScore} / 3`;
-  missionProgressText.textContent = `${missionIndex} de 3 evidencias analizadas`;
-  missionStep.textContent = `RETO 0${missionIndex + 1} · ${missionIndex === 2 ? "ESCUCHA" : "OBSERVA"}`;
-  missionTitle.textContent = stage.title;
-  missionPrompt.textContent = stage.prompt;
-  evidenceType.textContent = stage.type;
-  viewerCaption.textContent = stage.caption;
-  missionFeedback.textContent = "";
-  missionNext.classList.add("hidden");
-  evidenceVideo.pause();
-  evidenceVideo.currentTime = 0;
-  evidenceVideo.hidden = !stage.video;
-  evidenceImage.hidden = Boolean(stage.video);
-  scanTarget.hidden = Boolean(stage.video);
-  scanLabel.hidden = Boolean(stage.video);
-  if (!stage.video) {
-    evidenceImage.src = stage.image;
-    evidenceImage.alt = stage.alt;
-    scanLabel.textContent = missionIndex === 0 ? "NIVELES CONSTRUCTIVOS DETECTADOS" : "PIEZAS TALLADAS DETECTADAS";
-  }
-  answerOptions.innerHTML = "";
-  stage.options.forEach((option, index) => {
+const caseCount = document.querySelector("#caseCount");
+const siteScore = document.querySelector("#siteScore");
+const caseType = document.querySelector("#caseType");
+const caseIndexLabel = document.querySelector("#caseIndex");
+const caseTitle = document.querySelector("#caseTitle");
+const caseDescription = document.querySelector("#caseDescription");
+const decisionOptions = document.querySelector("#decisionOptions");
+const decisionFeedback = document.querySelector("#decisionFeedback");
+const caseNext = document.querySelector("#caseNext");
+const integrityBar = document.querySelector("#integrityBar");
+const gameStatus = document.querySelector("#gameStatus");
+const gameReset = document.querySelector("#gameReset");
+const mapMarkers = [
+  document.querySelector("#markerOne"),
+  document.querySelector("#markerTwo"),
+  document.querySelector("#markerThree")
+];
+
+function updateIntegrity() {
+  siteScore.textContent = `INTEGRIDAD DEL SITIO · ${siteIntegrity}%`;
+  integrityBar.style.width = `${siteIntegrity}%`;
+  integrityBar.classList.toggle("warning", siteIntegrity <= 70);
+}
+
+function renderCase() {
+  const activeCase = preservationCases[caseIndex];
+  caseResolved = false;
+  gameFinished = false;
+  caseCount.textContent = `CASO ${String(caseIndex + 1).padStart(2, "0")} / 03`;
+  caseType.textContent = activeCase.type;
+  caseIndexLabel.textContent = activeCase.instruction;
+  caseTitle.textContent = activeCase.title;
+  caseDescription.textContent = activeCase.description;
+  decisionFeedback.textContent = "";
+  caseNext.classList.add("hidden");
+  mapMarkers.forEach((marker, index) => {
+    marker.classList.toggle("active", index === caseIndex);
+    marker.classList.toggle("resolved", index < caseIndex);
+  });
+  decisionOptions.innerHTML = "";
+  activeCase.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.innerHTML = `<span>${String.fromCharCode(65 + index)}</span>${option.text}`;
-    button.addEventListener("click", () => answerMission(option, button));
-    answerOptions.append(button);
+    button.addEventListener("click", () => chooseAction(option, button));
+    decisionOptions.append(button);
   });
+  updateIntegrity();
 }
 
-function answerMission(option, selectedButton) {
-  if (answered) return;
-  if (option.correct) {
-    answered = true;
-    evidenceScore += 1;
-    selectedButton.classList.add("correct");
-    missionFeedback.textContent = option.feedback;
-    missionPoints.textContent = `ARCHIVO ${evidenceScore} / 3`;
-    missionProgressText.textContent = `${missionIndex + 1} de 3 evidencias analizadas`;
-    missionNext.textContent = missionIndex === missionStages.length - 1 ? "Revisar expediente ↻" : "Siguiente evidencia →";
-    missionNext.classList.remove("hidden");
-    answerOptions.querySelectorAll("button").forEach((button) => { button.disabled = true; });
-  } else {
+function chooseAction(option, selectedButton) {
+  if (caseResolved || gameFinished) return;
+  if (!option.correct) {
+    siteIntegrity = Math.max(40, siteIntegrity - 10);
     selectedButton.classList.add("incorrect");
-    missionFeedback.textContent = `${option.feedback} Prueba otra respuesta.`;
-    window.setTimeout(() => selectedButton.classList.remove("incorrect"), 700);
+    decisionFeedback.textContent = `${option.feedback} Reconsidera la decisión.`;
+    updateIntegrity();
+    window.setTimeout(() => selectedButton.classList.remove("incorrect"), 650);
+    return;
   }
+
+  caseResolved = true;
+  selectedButton.classList.add("correct");
+  decisionOptions.querySelectorAll("button").forEach((button) => { button.disabled = true; });
+  decisionFeedback.textContent = option.feedback;
+  caseNext.textContent = caseIndex === preservationCases.length - 1 ? "Ver resultado ↗" : "Siguiente decisión →";
+  caseNext.classList.remove("hidden");
+  gameStatus.textContent = `${caseIndex + 1} de 3 decisiones resueltas`;
 }
 
-missionNext.addEventListener("click", () => {
-  if (missionIndex === missionStages.length - 1) {
-    missionIndex = 0;
-    evidenceScore = 0;
+function showGameResult() {
+  gameFinished = true;
+  caseCount.textContent = "MISIÓN COMPLETADA";
+  caseType.textContent = "RESULTADO";
+  caseIndexLabel.textContent = "PROTOCOLO DE CONSERVACIÓN · CERRADO";
+  caseTitle.textContent = siteIntegrity >= 80 ? "Buen criterio, guardián del patrimonio." : "Aprender también es parte de conservar.";
+  caseDescription.textContent = `Terminaste con ${siteIntegrity}% de integridad en el simulador. Cada decisión responsable ayuda a proteger el sitio.`;
+  decisionOptions.innerHTML = "";
+  decisionFeedback.textContent = "Recuerda: observa, no muevas los hallazgos y consulta al personal capacitado.";
+  mapMarkers.forEach((marker) => marker.classList.add("resolved"));
+  gameStatus.textContent = "SIMULACIÓN COMPLETADA · VUELVE A JUGAR PARA MEJORAR TU RESULTADO";
+  caseNext.textContent = "Jugar de nuevo ↻";
+  caseNext.classList.remove("hidden");
+}
+
+function resetGame() {
+  caseIndex = 0;
+  siteIntegrity = 100;
+  gameStatus.textContent = "3 decisiones · una misión de conservación";
+  renderCase();
+}
+
+caseNext.addEventListener("click", () => {
+  if (gameFinished) {
+    resetGame();
+  } else if (caseIndex === preservationCases.length - 1) {
+    showGameResult();
   } else {
-    missionIndex += 1;
+    caseIndex += 1;
+    renderCase();
   }
-  renderMission();
 });
-missionReset.addEventListener("click", () => {
-  missionIndex = 0;
-  evidenceScore = 0;
-  renderMission();
-});
+gameReset.addEventListener("click", resetGame);
 
 goTo(0);
-renderMission();
+renderCase();
