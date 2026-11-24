@@ -44,64 +44,144 @@ const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) goTo(Number(entry.target.dataset.slide));
   });
-}, { threshold: 0.6 });
+}, { threshold: 0.58 });
 slides.forEach((slide) => observer.observe(slide));
 
-const missionSteps = [
+const missionStages = [
   {
-    title: "¿Qué elemento estás observando?",
-    options: ["Un patio ceremonial", "Un edificio moderno", "Una carretera"],
-    answer: 0,
-    note: "Correcto. Los patios ayudaban a organizar reuniones, rituales y actividades comunitarias."
+    title: "Reconoce las evidencias",
+    hint: "Forma el recorrido colocando cada elemento en el orden en que se aprende.",
+    cards: [
+      { id: "lugar", code: "A", name: "Zona arqueológica" },
+      { id: "historia", code: "B", name: "Construcción por etapas" },
+      { id: "proteccion", code: "C", name: "Acciones de conservación" }
+    ],
+    answer: ["lugar", "historia", "proteccion"]
   },
   {
-    title: "¿Qué nos dice la pirámide?",
-    options: ["Que se construyó en un solo año", "Que fue ampliada por distintas generaciones", "Que siempre estuvo cubierta de pasto"],
-    answer: 1,
-    note: "Exacto. Sus capas muestran que varias generaciones construyeron sobre el mismo espacio."
+    title: "Explica qué observaste",
+    hint: "Ordena los resultados de la visita: espacio, detalle y experiencia.",
+    cards: [
+      { id: "detalle", code: "A", name: "Cabeza tallada" },
+      { id: "espacio", code: "B", name: "Patios y estructuras" },
+      { id: "sonido", code: "C", name: "Palmadas y resonancia" }
+    ],
+    answer: ["espacio", "detalle", "sonido"]
   },
   {
-    title: "¿Cuál es la mejor forma de cuidar el sitio?",
-    options: ["Tocar los muros para sentir su antigüedad", "Caminar fuera de las rutas", "Seguir las indicaciones y no dejar basura"],
-    answer: 2,
-    note: "¡Muy bien! Cuidar las rutas, los muros y el entorno protege la historia para futuras visitas."
+    title: "Defiende el patrimonio",
+    hint: "Selecciona primero la acción responsable y luego las consecuencias.",
+    cards: [
+      { id: "consecuencia", code: "A", name: "Protege para futuras visitas" },
+      { id: "accion", code: "B", name: "Respetar rutas y indicaciones" },
+      { id: "comprension", code: "C", name: "Conocer antes de opinar" }
+    ],
+    answer: ["comprension", "accion", "consecuencia"]
   }
 ];
 let missionIndex = 0;
-const missionStep = document.querySelector("#missionStep");
+let selected = [];
+
+const missionCount = document.querySelector("#missionCount");
 const missionTitle = document.querySelector("#missionTitle");
-const missionOptions = document.querySelector("#missionOptions");
+const missionHint = document.querySelector("#missionHint");
+const missionSteps = document.querySelector("#missionSteps");
+const cardBank = document.querySelector("#cardBank");
+const dropZone = document.querySelector("#dropZone");
 const missionFeedback = document.querySelector("#missionFeedback");
-const missionNext = document.querySelector("#missionNext");
+const missionReset = document.querySelector("#missionReset");
 
 function renderMission() {
-  const item = missionSteps[missionIndex];
-  missionStep.textContent = `Paso ${missionIndex + 1} de ${missionSteps.length} · Elige una pista`;
-  missionTitle.textContent = item.title;
+  const stage = missionStages[missionIndex];
+  selected = [];
+  missionCount.textContent = `SECUENCIA ${String(missionIndex + 1).padStart(2, "0")} / 03`;
+  missionTitle.textContent = stage.title;
+  missionHint.textContent = stage.hint;
   missionFeedback.textContent = "";
-  missionNext.classList.add("hidden");
-  missionOptions.innerHTML = "";
-  item.options.forEach((option, index) => {
+  dropZone.innerHTML = "<span>Arrastra aquí una tarjeta</span>";
+  [...missionSteps.children].forEach((step, index) => {
+    step.className = index === missionIndex ? "active" : index < missionIndex ? "done" : "";
+  });
+  cardBank.innerHTML = "";
+  stage.cards.forEach((card) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
-    button.addEventListener("click", () => answerMission(index));
-    missionOptions.append(button);
+    button.draggable = true;
+    button.dataset.id = card.id;
+    button.innerHTML = `<span>${card.code} / TARJETA</span>${card.name}`;
+    button.addEventListener("click", () => addCard(card.id));
+    button.addEventListener("dragstart", (event) => event.dataTransfer.setData("text/plain", card.id));
+    cardBank.append(button);
   });
 }
-function answerMission(selected) {
-  const item = missionSteps[missionIndex];
-  const buttons = [...missionOptions.children];
-  buttons.forEach((button) => { button.disabled = true; });
-  buttons[item.answer].classList.add("correct");
-  if (selected !== item.answer) buttons[selected].classList.add("wrong");
-  missionFeedback.textContent = selected === item.answer ? item.note : `Observa de nuevo la imagen. ${item.note}`;
-  missionNext.textContent = missionIndex === missionSteps.length - 1 ? "Repetir misión ↻" : "Siguiente pista →";
-  missionNext.classList.remove("hidden");
+
+function addCard(id) {
+  if (selected.includes(id)) return;
+  selected.push(id);
+  const stage = missionStages[missionIndex];
+  const card = stage.cards.find((item) => item.id === id);
+  const bankCard = cardBank.querySelector(`[data-id="${id}"]`);
+  if (bankCard) bankCard.classList.add("used");
+  if (dropZone.querySelector(":scope > span")) dropZone.innerHTML = "";
+  const selectedCard = document.createElement("button");
+  selectedCard.type = "button";
+  selectedCard.dataset.id = id;
+  selectedCard.textContent = card.name;
+  selectedCard.addEventListener("click", () => removeCard(id));
+  dropZone.append(selectedCard);
+  if (selected.length === stage.answer.length) validateMission();
 }
-missionNext.addEventListener("click", () => {
-  missionIndex = missionIndex === missionSteps.length - 1 ? 0 : missionIndex + 1;
+
+function removeCard(id) {
+  selected = selected.filter((item) => item !== id);
+  const zoneCard = dropZone.querySelector(`[data-id="${id}"]`);
+  if (zoneCard) zoneCard.remove();
+  const bankCard = cardBank.querySelector(`[data-id="${id}"]`);
+  if (bankCard) bankCard.classList.remove("used");
+  if (!selected.length) dropZone.innerHTML = "<span>Arrastra aquí una tarjeta</span>";
+  missionFeedback.textContent = "";
+}
+
+function validateMission() {
+  const stage = missionStages[missionIndex];
+  const correct = stage.answer.every((id, index) => selected[index] === id);
+  if (!correct) {
+    missionFeedback.textContent = "Secuencia incompleta. Cambia el orden tocando las tarjetas seleccionadas.";
+    selected.forEach((id) => {
+      const bankCard = cardBank.querySelector(`[data-id="${id}"]`);
+      if (bankCard) bankCard.classList.remove("used");
+    });
+    [...dropZone.querySelectorAll("button")].forEach((button) => button.remove());
+    selected = [];
+    return;
+  }
+  missionFeedback.textContent = missionIndex === missionStages.length - 1
+    ? "Misión completa: observaste, explicaste y defendiste el patrimonio."
+    : "Secuencia correcta. Avanza a la siguiente misión.";
+  if (missionIndex < missionStages.length - 1) {
+    window.setTimeout(() => {
+      missionIndex += 1;
+      renderMission();
+    }, 1150);
+  } else {
+    missionSteps.querySelectorAll("i").forEach((step) => step.className = "done");
+  }
+}
+
+dropZone.addEventListener("dragover", (event) => event.preventDefault());
+dropZone.addEventListener("drop", (event) => {
+  event.preventDefault();
+  addCard(event.dataTransfer.getData("text/plain"));
+});
+missionReset.addEventListener("click", () => {
+  missionIndex = 0;
   renderMission();
+});
+
+document.querySelectorAll(".chat-options button").forEach((button) => {
+  button.addEventListener("click", () => {
+    document.querySelector("#chatAnswer").textContent = button.dataset.answer;
+  });
 });
 
 goTo(0);

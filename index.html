@@ -3,200 +3,208 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#172b3a" />
-    <meta
-      name="description"
-      content="Descubriendo Cholula: una presentación escolar sobre historia, patrimonio y uso responsable de la Inteligencia Artificial."
-    />
-    <title>Descubriendo Cholula | Mario Mora Valdez</title>
+    <meta name="theme-color" content="#07111b" />
+    <meta name="description" content="Guía turística digital interactiva sobre la Zona Arqueológica de Cholula." />
+    <title>Cholula / Archivo Patrimonial</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap"
-      rel="stylesheet"
-    />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
-    <main>
-      <section class="slide hero" data-slide="0" aria-label="Portada">
-        <div class="hero-image" aria-hidden="true"></div>
-        <div class="hero-content">
-          <p class="kicker">Puebla · México</p>
+    <div class="ambient-grid" aria-hidden="true"></div>
+    <div class="progress"><span id="progressBar"></span></div>
+
+    <main class="deck">
+      <section class="slide cover" data-slide="0" aria-label="Portada">
+        <div class="cover-media">
+          <img src="assets/piramide-frente.jpg" alt="Vista de la pirámide y las estructuras arqueológicas de Cholula" />
+          <div class="scan-line"></div>
+        </div>
+        <div class="cover-copy">
+          <div class="status"><span></span> Archivo 01 · Puebla</div>
+          <p class="kicker">Guía turística digital / 2026</p>
           <h1>Descubriendo<br /><em>Cholula</em></h1>
-          <p class="hero-subtitle">Un recorrido histórico con Inteligencia Artificial</p>
-          <div class="hero-meta">
-            <span>Exposición escolar</span>
-            <span class="dot"></span>
-            <span>Mario Mora Valdez</span>
+          <p class="subtitle">Un recorrido histórico con <strong>Inteligencia Artificial</strong></p>
+          <div class="author-card">
+            <div><small>Proyecto de</small><strong>Mario Mora Valdez</strong></div>
+            <div><small>Foco</small><strong>Zona arqueológica</strong></div>
           </div>
-          <p class="heritage-phrase">“Conocer el patrimonio es el primer paso para protegerlo.”</p>
-          <button class="primary-button" data-next>Comenzar recorrido <span>→</span></button>
+          <p class="manifesto">“Conocer el patrimonio es el primer paso para protegerlo.”</p>
+          <button class="cyber-button" data-next>Explorar registro <span>↗</span></button>
         </div>
-        <div class="scroll-hint">Desliza o usa las flechas <span>↓</span></div>
       </section>
 
-      <section class="slide intro" data-slide="1" aria-label="Introducción">
-        <div class="section-grid">
-          <div class="section-copy">
-            <p class="kicker">01 · El lugar</p>
-            <h2>Una ciudad donde<br /><em>conviven los tiempos</em></h2>
-            <p class="lead">
-              Cholula es uno de los asentamientos vivos más antiguos de América. En un mismo paisaje
-              se encuentran la memoria prehispánica, la arquitectura colonial y la vida cotidiana de
-              una ciudad actual.
-            </p>
-            <div class="stat-row">
-              <div><strong>2,300+</strong><span>años de historia</span></div>
-              <div><strong>400 m</strong><span>por lado de su base</span></div>
-              <div><strong>1</strong><span>gran paisaje cultural</span></div>
+      <section class="slide" data-slide="1" aria-label="Conociendo Cholula">
+        <div class="slide-shell">
+          <header class="section-heading">
+            <p><span>01</span> Contexto</p>
+            <h2>Una ciudad hecha<br />de <em>memorias</em></h2>
+          </header>
+          <div class="context-grid">
+            <div class="context-copy">
+              <p class="lead">Cholula es un territorio donde conviven la arquitectura prehispánica, el paisaje colonial y la vida actual. Su historia no pertenece solo al pasado: continúa en cada visita, tradición y forma de cuidar el lugar.</p>
+              <div class="data-strip">
+                <article><strong>2,300+</strong><span>Años de<br />historia</span></article>
+                <article><strong>400 m</strong><span>Medida aproximada<br />de la base</span></article>
+                <article><strong>4</strong><span>Épocas visibles<br />en el paisaje</span></article>
+              </div>
+            </div>
+            <figure class="data-image">
+              <div class="image-index">ARCHIVO / 001</div>
+              <img src="assets/arqueologia-panoramica.jpg" alt="Panorámica real de la Zona Arqueológica de Cholula" />
+              <figcaption>Mi registro durante la visita: estructuras superpuestas y grandes espacios ceremoniales.</figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="2" aria-label="Estación arqueológica">
+        <div class="slide-shell">
+          <header class="section-heading compact">
+            <p><span>02</span> Estación del recorrido</p>
+            <h2>Zona arqueológica<br /><em>Tlachihualtépetl</em></h2>
+          </header>
+          <div class="station-layout">
+            <figure class="station-main">
+              <img src="assets/escalera-piramide.jpg" alt="Escalera y estructura principal de la pirámide arqueológica" />
+              <figcaption>Escala monumental y construcción escalonada.</figcaption>
+            </figure>
+            <div class="station-panel">
+              <div class="panel-tabs"><span class="active">Lugar</span><span>Historia</span><span>Cultura</span></div>
+              <h3>El cerro hecho a mano</h3>
+              <p><strong>Tlachihualtépetl</strong> significa “cerro hecho a mano”. La pirámide fue ampliada en distintas etapas. Por eso, al recorrerla podemos ver cómo varias generaciones construyeron sobre una misma ciudad sagrada.</p>
+              <div class="station-facts">
+                <article><span>01</span><div><strong>Características</strong><p>Patios ceremoniales, altares, escalones y túneles.</p></div></article>
+                <article><span>02</span><div><strong>Importancia cultural</strong><p>Guarda la memoria de una ciudad de intercambio y ritual.</p></div></article>
+                <article><span>03</span><div><strong>Dato interesante</strong><p>Es reconocida por tener una de las bases más grandes del mundo.</p></div></article>
+              </div>
+              <p class="reflection"><strong>Conservación:</strong> no tocar ni escalar fuera de las rutas permitidas ayuda a proteger los muros y superficies antiguas.</p>
             </div>
           </div>
-          <figure class="image-card image-card-tall">
-            <img src="26998.png" alt="Vista panorámica de Cholula con el santuario y el volcán Popocatépetl" />
-            <figcaption>El Santuario de los Remedios domina la cima del Tlachihualtépetl.</figcaption>
-          </figure>
         </div>
       </section>
 
-      <section class="slide pyramid" data-slide="2" aria-label="La Gran Pirámide">
-        <div class="section-grid reverse">
-          <div class="section-copy">
-            <p class="kicker">02 · Estación del recorrido</p>
-            <h2>Zona arqueológica:<br /><em>el cerro hecho a mano</em></h2>
-            <p class="lead">
-              Su nombre náhuatl, <strong>Tlachihualtépetl</strong>, significa “cerro hecho a mano”.
-              No es una sola construcción: es el resultado de varias etapas de ampliación que se
-              acumularon durante siglos.
-            </p>
-            <p class="station-label">Reseña histórica y cultural</p>
-            <p class="station-copy">La zona fue un centro ceremonial y de intercambio durante siglos. Sus patios, altares y túneles muestran cómo distintas sociedades construyeron sobre el mismo espacio. Hoy, el santuario y la pirámide forman un paisaje cultural único.</p>
-            <div class="fact-list">
-              <div><span class="fact-number">01</span><p><strong>Características:</strong> patios, altares, túneles y varias etapas constructivas.</p></div>
-              <div><span class="fact-number">02</span><p><strong>Importancia:</strong> conserva la memoria de una ciudad sagrada que sigue viva.</p></div>
-              <div><span class="fact-number">03</span><p><strong>Dato interesante:</strong> su base mide aproximadamente 400 metros por lado.</p></div>
-            </div>
-            <p class="conservation-note"><strong>Mi reflexión:</strong> visitar sin tocar, subir por las rutas permitidas y no dejar basura también es una forma de conservar.</p>
-          </div>
-          <figure class="image-card image-card-wide">
-            <img src="26995.png" alt="Vista aérea de la zona arqueológica de Cholula" />
-            <figcaption>La zona arqueológica conserva patios, altares y túneles.</figcaption>
-          </figure>
-        </div>
-      </section>
-
-      <section class="slide layers" data-slide="3" aria-label="Actividad interactiva">
-        <div class="center-heading">
-          <p class="kicker">03 · Actividad con IA</p>
-          <h2>Misión arqueóloga:<br /><em>lee el paisaje</em></h2>
-          <p class="lead">Una actividad breve para explicar la visita: observa, relaciona las pistas y decide cómo proteger el sitio.</p>
-        </div>
-        <div class="mission-card">
-          <div class="mission-map">
-            <img src="26995.png" alt="Vista de la zona arqueológica para identificar sus elementos" />
-            <span class="map-pin pin-one">1</span><span class="map-pin pin-two">2</span><span class="map-pin pin-three">3</span>
-          </div>
-          <div class="mission-content">
-            <p class="mission-step" id="missionStep">Paso 1 de 3 · Elige una pista</p>
-            <h3 id="missionTitle">¿Qué elemento estás observando?</h3>
-            <div class="mission-options" id="missionOptions"></div>
-            <p class="mission-feedback" id="missionFeedback" aria-live="polite"></p>
-            <button class="text-button hidden" id="missionNext">Siguiente pista →</button>
+      <section class="slide" data-slide="3" aria-label="Archivos de evidencia">
+        <div class="slide-shell evidence-shell">
+          <header class="section-heading compact">
+            <p><span>03</span> Evidencia de campo</p>
+            <h2>Lo que vi<br /><em>lo aprendí</em></h2>
+          </header>
+          <div class="evidence-grid">
+            <figure>
+              <img src="assets/arqueologia-cabeza-serpiente.jpg" alt="Cabeza tallada y elementos arqueológicos mostrados al público" />
+              <figcaption><strong>Detalle tallado</strong><br />Escultura protectora y evidencia de trabajo artesanal.</figcaption>
+            </figure>
+            <figure>
+              <img src="assets/templete-piramide.jpg" alt="Templete construido sobre una estructura arqueológica" />
+              <figcaption><strong>Templete resguardado</strong><br />Una cubierta moderna protege parte del patrimonio.</figcaption>
+            </figure>
+            <article class="video-card">
+              <video controls preload="metadata" playsinline poster="assets/piramide-frente.jpg">
+                <source src="assets/palmadas-arqueologia.mp4" type="video/mp4" />
+              </video>
+              <div><strong>Experiencia sonora</strong><p>Al dar palmadas, el espacio amplifica la vibración y produce un efecto que puede parecer un sonido parecido al de un pato. La explicación de por qué ocurre pertenece al sonido y la forma del recinto.</p></div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section class="slide guide" data-slide="4" aria-label="Guía de visita">
-        <div class="section-grid">
-          <div class="section-copy">
-            <p class="kicker">04 · Mi propuesta</p>
-            <h2>Cholli,<br /><em>tu guía digital</em></h2>
-            <p class="lead">
-              Imaginé a Cholli como un asistente amable para preparar una visita: explica sin reemplazar
-              a los especialistas y ayuda a observar el patrimonio con respeto.
-            </p>
-            <div class="principles">
-              <div><span>✦</span><p><strong>Observar</strong><br />Mirar los detalles antes de sacar conclusiones.</p></div>
-              <div><span>✦</span><p><strong>Preguntar</strong><br />Usar la tecnología para despertar curiosidad.</p></div>
-              <div><span>✦</span><p><strong>Cuidar</strong><br />Tratar el patrimonio y a las personas con respeto.</p></div>
+      <section class="slide activity-slide" data-slide="4" aria-label="Actividad interactiva">
+        <div class="slide-shell activity-shell">
+          <header class="section-heading compact">
+            <p><span>04</span> Actividad con IA</p>
+            <h2>Reconstruye<br /><em>la visita</em></h2>
+          </header>
+          <div class="mission-console">
+            <aside>
+              <div class="console-status"><span></span> MISIÓN ACTIVA</div>
+              <p id="missionCount">SECUENCIA 01 / 03</p>
+              <h3 id="missionTitle">¿Qué elemento encontramos primero?</h3>
+              <p id="missionHint">Elige las tarjetas en el orden correcto.</p>
+              <div class="steps" id="missionSteps"><i class="active"></i><i></i><i></i></div>
+              <button class="console-reset" id="missionReset">Reiniciar misión</button>
+            </aside>
+            <div class="mission-workspace">
+              <div class="workspace-label">Tarjetas disponibles</div>
+              <div class="card-bank" id="cardBank"></div>
+              <div class="workspace-label">Secuencia reconstruida</div>
+              <div class="drop-zone" id="dropZone" aria-live="polite">
+                <span>Arrastra aquí una tarjeta</span>
+              </div>
+              <p class="mission-feedback" id="missionFeedback" aria-live="polite"></p>
             </div>
           </div>
-          <div class="robot-card">
-            <div class="robot-orbit"></div>
-            <div class="robot-face"><i></i><i></i><b></b></div>
-            <div class="robot-body"><span></span><span></span><span></span></div>
-            <p>Hola, soy Cholli</p>
-            <small>Tu acompañante para descubrir Cholula</small>
+        </div>
+      </section>
+
+      <section class="slide" data-slide="5" aria-label="Cholli y la inteligencia artificial">
+        <div class="slide-shell">
+          <header class="section-heading compact">
+            <p><span>05</span> Cholula explicada con IA</p>
+            <h2>Cholli, <em>guía digital</em></h2>
+          </header>
+          <div class="cholli-layout">
+            <div class="chat-console">
+              <div class="chat-head"><span class="ai-dot"></span> CHOLLI / ASISTENTE ARQUEOLÓGICO <b>EN LÍNEA</b></div>
+              <div class="chat-message bot"><span>CH</span><p>Hola. Puedo ayudarte a explicar el recorrido. ¿Qué quieres descubrir?</p></div>
+              <div class="chat-options">
+                <button data-answer="Tlachihualtépetl significa «cerro hecho a mano» y describe una pirámide construida mediante ampliaciones sucesivas.">¿Qué significa Tlachihualtépetl?</button>
+                <button data-answer="Un templete, una cubierta moderna y rutas señalizadas ayudan a proteger estructuras arqueológicas sin ocultar su historia.">¿Qué protege el patrimonio?</button>
+                <button data-answer="El efecto depende de la forma cerrada del espacio: las superficies reflejan y entremezclan las ondas sonoras.">¿Por qué suena como pato?</button>
+              </div>
+              <p class="chat-answer" id="chatAnswer" aria-live="polite">Selecciona una pregunta para mostrar la respuesta.</p>
+            </div>
+            <aside class="ethics-card">
+              <p>PRINCIPIO DE USO</p>
+              <strong>La IA propone.<br />La persona verifica.</strong>
+              <ul>
+                <li>Contrasta datos.</li>
+                <li>Reconoce la herramienta.</li>
+                <li>Protege imágenes y rostros.</li>
+                <li>Respeta la cultura.</li>
+              </ul>
+            </aside>
           </div>
         </div>
       </section>
 
-      <section class="slide quiz" data-slide="5" aria-label="Cómo explicar la actividad">
-        <div class="center-heading">
-          <p class="kicker">05 · Guion para exponer</p>
-          <h2>Explica la misión<br /><em>con facilidad</em></h2>
-          <p class="lead">Después de jugar, conecta cada respuesta con lo que observaste durante la visita.</p>
-        </div>
-        <div class="explain-grid">
-          <article class="explain-card"><span>01</span><h3>Observar</h3><p>“Primero ubicamos patios, túneles y la pirámide. La imagen nos ayuda a mirar antes de responder.”</p></article>
-          <article class="explain-card"><span>02</span><h3>Relacionar</h3><p>“Las capas muestran que varias generaciones construyeron en el mismo lugar.”</p></article>
-          <article class="explain-card"><span>03</span><h3>Actuar</h3><p>“La última pista nos recuerda que conocer el patrimonio también implica cuidarlo.”</p></article>
-        </div>
-      </section>
-
-      <section class="slide ethics" data-slide="6" aria-label="Uso responsable de la IA">
-        <div class="section-grid reverse">
-          <div class="section-copy">
-            <p class="kicker">06 · Reflexión</p>
-            <h2>La IA ayuda,<br /><em>pero no decide</em></h2>
-            <p class="lead">
-              La herramienta puede organizar ideas y proponer formas de comunicar. La responsabilidad
-              de verificar, citar y publicar siempre es de quien la utiliza.
-            </p>
-            <div class="check-list">
-              <p><span>✓</span> Contrasté los datos con fuentes confiables.</p>
-              <p><span>✓</span> Aclaré cuándo utilicé Inteligencia Artificial.</p>
-              <p><span>✓</span> Usé fotografías propias y cuidé la privacidad.</p>
-              <p><span>✓</span> Evité estereotipos y respeté el patrimonio.</p>
-            </div>
-            <div class="ethics-questions">
-              <details><summary>¿Qué herramienta utilicé y para qué?</summary><p>Usé IA generativa para organizar ideas, mejorar la redacción y crear esta actividad. La investigación y la decisión final fueron mías.</p></details>
-              <details><summary>¿Cómo comprobé los datos?</summary><p>Comparé las respuestas con fuentes del INAH, información turística oficial y lo observado durante la visita.</p></details>
-              <details><summary>¿Qué riesgos existen?</summary><p>La IA puede inventar fechas, nombres o explicaciones. Por eso revisé y corregí la información antes de publicarla.</p></details>
-              <details><summary>¿Cómo ayuda la IA a conservar?</summary><p>Puede hacer la historia más accesible y despertar interés, siempre que difunda datos verificados y respeto por el sitio.</p></details>
-            </div>
+      <section class="slide" data-slide="6" aria-label="Ética e inteligencia artificial">
+        <div class="slide-shell">
+          <header class="section-heading compact">
+            <p><span>06</span> Ética e IA</p>
+            <h2>Uso responsable,<br /><em>criterio propio</em></h2>
+          </header>
+          <div class="ethics-grid">
+            <article><span>01</span><h3>Herramienta y propósito</h3><p>Utilicé IA generativa para organizar ideas, mejorar la redacción y diseñar recursos interactivos. Mi investigación y decisión final fueron propias.</p></article>
+            <article><span>02</span><h3>Verificación</h3><p>Contraste datos con el INAH, fuentes oficiales de turismo y información observada durante la visita.</p></article>
+            <article><span>03</span><h3>Riesgos</h3><p>La IA puede inventar fechas, nombres o explicaciones. Por eso no publiqué ninguna información sin verificarla.</p></article>
+            <article><span>04</span><h3>Cuidado personal</h3><p>Usé fotografías propias, evité publicar rostros identificables sin permiso y reconocí qué parte del texto tuvo apoyo de IA.</p></article>
           </div>
-          <div class="quote-card">
-            <span class="quote-mark">“</span>
-            <blockquote>La tecnología es más valiosa cuando aumenta nuestra curiosidad, no cuando sustituye nuestro criterio.</blockquote>
-            <div class="quote-line"></div>
-            <p>Idea central del proyecto</p>
-          </div>
+          <div class="correction"><span>Dato corregido</span><p>Se verificó que Tlachihualtépetl hace referencia al cerro hecho a mano y que la pirámide es el resultado de ampliaciones sucesivas, no de una sola construcción.</p></div>
         </div>
       </section>
 
       <section class="slide closing" data-slide="7" aria-label="Conclusión">
-        <div class="closing-image" aria-hidden="true"></div>
-        <div class="closing-content">
-          <p class="kicker">07 · Para llevar contigo</p>
+        <div class="closing-media"><img src="assets/piramide-frente.jpg" alt="Zona arqueológica de Cholula al atardecer" /></div>
+        <div class="closing-copy">
+          <p class="kicker">07 · Conclusión</p>
           <h2>Cholula no es<br /><em>solo una pirámide</em></h2>
-          <p class="closing-text">Es una historia viva que merece ser conocida, verificada y cuidada.</p>
-          <div class="closing-rule"></div>
-          <p class="closing-author">Gracias por escuchar<br /><strong>Mario Mora Valdez</strong></p>
-          <button class="primary-button light" data-restart>Volver al inicio <span>↗</span></button>
+          <p>Es una historia viva que merece ser conocida, verificada y cuidada.</p>
+          <div class="closing-line"></div>
+          <small>Mario Mora Valdez</small>
+          <button class="cyber-button" data-restart>Volver al inicio <span>↺</span></button>
         </div>
       </section>
     </main>
 
-    <nav class="controls" aria-label="Controles de la presentación">
-      <button id="prev" aria-label="Diapositiva anterior">←</button>
-      <div class="dots" id="dots"></div>
-      <span class="counter" id="counter">01 / 08</span>
-      <button id="next" aria-label="Siguiente diapositiva">→</button>
-      <button class="fullscreen" id="fullscreen" aria-label="Activar pantalla completa">⛶</button>
+    <nav class="controls" aria-label="Navegación">
+      <button id="prev" aria-label="Anterior">←</button>
+      <div id="dots" class="dots"></div>
+      <span id="counter">01 / 08</span>
+      <button id="next" aria-label="Siguiente">→</button>
+      <button id="fullscreen" class="fullscreen" aria-label="Pantalla completa">⛶</button>
     </nav>
-    <p class="keyboard-hint">← → para navegar · F pantalla completa</p>
     <script src="script.js"></script>
   </body>
 </html>
