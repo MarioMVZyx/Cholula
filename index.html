@@ -31,6 +31,7 @@
             <span class="dot"></span>
             <span>Mario Mora Valdez</span>
           </div>
+          <p class="heritage-phrase">“Conocer el patrimonio es el primer paso para protegerlo.”</p>
           <button class="primary-button" data-next>Comenzar recorrido <span>→</span></button>
         </div>
         <div class="scroll-hint">Desliza o usa las flechas <span>↓</span></div>
@@ -62,18 +63,21 @@
       <section class="slide pyramid" data-slide="2" aria-label="La Gran Pirámide">
         <div class="section-grid reverse">
           <div class="section-copy">
-            <p class="kicker">02 · Tlachihualtépetl</p>
-            <h2>El cerro<br /><em>hecho a mano</em></h2>
+            <p class="kicker">02 · Estación del recorrido</p>
+            <h2>Zona arqueológica:<br /><em>el cerro hecho a mano</em></h2>
             <p class="lead">
               Su nombre náhuatl, <strong>Tlachihualtépetl</strong>, significa “cerro hecho a mano”.
               No es una sola construcción: es el resultado de varias etapas de ampliación que se
               acumularon durante siglos.
             </p>
+            <p class="station-label">Reseña histórica y cultural</p>
+            <p class="station-copy">La zona fue un centro ceremonial y de intercambio durante siglos. Sus patios, altares y túneles muestran cómo distintas sociedades construyeron sobre el mismo espacio. Hoy, el santuario y la pirámide forman un paisaje cultural único.</p>
             <div class="fact-list">
-              <div><span class="fact-number">01</span><p>La base tiene aproximadamente 400 metros por lado.</p></div>
-              <div><span class="fact-number">02</span><p>Es reconocida por tener la mayor base de una pirámide en el mundo.</p></div>
-              <div><span class="fact-number">03</span><p>En su cima se encuentra el Santuario de Nuestra Señora de los Remedios.</p></div>
+              <div><span class="fact-number">01</span><p><strong>Características:</strong> patios, altares, túneles y varias etapas constructivas.</p></div>
+              <div><span class="fact-number">02</span><p><strong>Importancia:</strong> conserva la memoria de una ciudad sagrada que sigue viva.</p></div>
+              <div><span class="fact-number">03</span><p><strong>Dato interesante:</strong> su base mide aproximadamente 400 metros por lado.</p></div>
             </div>
+            <p class="conservation-note"><strong>Mi reflexión:</strong> visitar sin tocar, subir por las rutas permitidas y no dejar basura también es una forma de conservar.</p>
           </div>
           <figure class="image-card image-card-wide">
             <img src="26995.png" alt="Vista aérea de la zona arqueológica de Cholula" />
@@ -82,17 +86,24 @@
         </div>
       </section>
 
-      <section class="slide layers" data-slide="3" aria-label="Capas de historia">
+      <section class="slide layers" data-slide="3" aria-label="Actividad interactiva">
         <div class="center-heading">
-          <p class="kicker">03 · Leer el paisaje</p>
-          <h2>Cholula se entiende<br /><em>por capas</em></h2>
-          <p class="lead">Cada etapa dejó una huella. Juntas cuentan una historia de continuidad y transformación.</p>
+          <p class="kicker">03 · Actividad con IA</p>
+          <h2>Misión arqueóloga:<br /><em>lee el paisaje</em></h2>
+          <p class="lead">Una actividad breve para explicar la visita: observa, relaciona las pistas y decide cómo proteger el sitio.</p>
         </div>
-        <div class="layers-grid">
-          <article class="layer-card"><span>01</span><h3>Origen prehispánico</h3><p>Centro ceremonial y espacio de intercambio para distintos pueblos mesoamericanos.</p></article>
-          <article class="layer-card featured"><span>02</span><h3>La gran pirámide</h3><p>Construida y ampliada durante siglos, hoy parece una colina cubierta de vegetación.</p></article>
-          <article class="layer-card"><span>03</span><h3>La época colonial</h3><p>El santuario en la cima muestra cómo los nuevos símbolos se superpusieron a los anteriores.</p></article>
-          <article class="layer-card"><span>04</span><h3>La ciudad actual</h3><p>El patrimonio sigue formando parte de la vida, las tradiciones y la identidad local.</p></article>
+        <div class="mission-card">
+          <div class="mission-map">
+            <img src="26995.png" alt="Vista de la zona arqueológica para identificar sus elementos" />
+            <span class="map-pin pin-one">1</span><span class="map-pin pin-two">2</span><span class="map-pin pin-three">3</span>
+          </div>
+          <div class="mission-content">
+            <p class="mission-step" id="missionStep">Paso 1 de 3 · Elige una pista</p>
+            <h3 id="missionTitle">¿Qué elemento estás observando?</h3>
+            <div class="mission-options" id="missionOptions"></div>
+            <p class="mission-feedback" id="missionFeedback" aria-live="polite"></p>
+            <button class="text-button hidden" id="missionNext">Siguiente pista →</button>
+          </div>
         </div>
       </section>
 
@@ -121,18 +132,16 @@
         </div>
       </section>
 
-      <section class="slide quiz" data-slide="5" aria-label="Reto de conocimiento">
+      <section class="slide quiz" data-slide="5" aria-label="Cómo explicar la actividad">
         <div class="center-heading">
-          <p class="kicker">05 · Reto de conocimiento</p>
-          <h2>¿Qué tanto<br /><em>descubriste?</em></h2>
-          <p class="lead">Elige una respuesta. No pasa nada si te equivocas: aprender también es revisar.</p>
+          <p class="kicker">05 · Guion para exponer</p>
+          <h2>Explica la misión<br /><em>con facilidad</em></h2>
+          <p class="lead">Después de jugar, conecta cada respuesta con lo que observaste durante la visita.</p>
         </div>
-        <div class="quiz-card" id="quizCard">
-          <div class="quiz-top"><span id="questionCount">Pregunta 1 de 3</span><span id="score">0 aciertos</span></div>
-          <h3 id="question">¿Cuál es el nombre náhuatl de la Gran Pirámide de Cholula?</h3>
-          <div class="answers" id="answers"></div>
-          <p class="quiz-feedback" id="feedback" aria-live="polite"></p>
-          <button class="text-button hidden" id="nextQuestion">Siguiente pregunta →</button>
+        <div class="explain-grid">
+          <article class="explain-card"><span>01</span><h3>Observar</h3><p>“Primero ubicamos patios, túneles y la pirámide. La imagen nos ayuda a mirar antes de responder.”</p></article>
+          <article class="explain-card"><span>02</span><h3>Relacionar</h3><p>“Las capas muestran que varias generaciones construyeron en el mismo lugar.”</p></article>
+          <article class="explain-card"><span>03</span><h3>Actuar</h3><p>“La última pista nos recuerda que conocer el patrimonio también implica cuidarlo.”</p></article>
         </div>
       </section>
 
@@ -150,6 +159,12 @@
               <p><span>✓</span> Aclaré cuándo utilicé Inteligencia Artificial.</p>
               <p><span>✓</span> Usé fotografías propias y cuidé la privacidad.</p>
               <p><span>✓</span> Evité estereotipos y respeté el patrimonio.</p>
+            </div>
+            <div class="ethics-questions">
+              <details><summary>¿Qué herramienta utilicé y para qué?</summary><p>Usé IA generativa para organizar ideas, mejorar la redacción y crear esta actividad. La investigación y la decisión final fueron mías.</p></details>
+              <details><summary>¿Cómo comprobé los datos?</summary><p>Comparé las respuestas con fuentes del INAH, información turística oficial y lo observado durante la visita.</p></details>
+              <details><summary>¿Qué riesgos existen?</summary><p>La IA puede inventar fechas, nombres o explicaciones. Por eso revisé y corregí la información antes de publicarla.</p></details>
+              <details><summary>¿Cómo ayuda la IA a conservar?</summary><p>Puede hacer la historia más accesible y despertar interés, siempre que difunda datos verificados y respeto por el sitio.</p></details>
             </div>
           </div>
           <div class="quote-card">

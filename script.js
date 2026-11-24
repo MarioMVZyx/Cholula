@@ -47,57 +47,62 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.6 });
 slides.forEach((slide) => observer.observe(slide));
 
-const questions = [
-  { text: "¿Cuál es el nombre náhuatl de la Gran Pirámide de Cholula?", options: ["Teotihuacan", "Tlachihualtépetl", "Tenochtitlan", "Xochicalco"], answer: 1, note: "Tlachihualtépetl significa “cerro hecho a mano”." },
-  { text: "¿Qué edificio está en la cima de la pirámide?", options: ["La Catedral de Puebla", "El Templo de Santo Domingo", "El Santuario de Nuestra Señora de los Remedios", "La Capilla Real"], answer: 2, note: "El santuario fue construido en el siglo XVI." },
-  { text: "¿Por qué es famosa la pirámide a nivel mundial?", options: ["Por ser la más alta", "Por tener la mayor base", "Por ser la más reciente", "Por estar hecha de oro"], answer: 1, note: "Su base mide aproximadamente 400 metros por lado." }
+const missionSteps = [
+  {
+    title: "¿Qué elemento estás observando?",
+    options: ["Un patio ceremonial", "Un edificio moderno", "Una carretera"],
+    answer: 0,
+    note: "Correcto. Los patios ayudaban a organizar reuniones, rituales y actividades comunitarias."
+  },
+  {
+    title: "¿Qué nos dice la pirámide?",
+    options: ["Que se construyó en un solo año", "Que fue ampliada por distintas generaciones", "Que siempre estuvo cubierta de pasto"],
+    answer: 1,
+    note: "Exacto. Sus capas muestran que varias generaciones construyeron sobre el mismo espacio."
+  },
+  {
+    title: "¿Cuál es la mejor forma de cuidar el sitio?",
+    options: ["Tocar los muros para sentir su antigüedad", "Caminar fuera de las rutas", "Seguir las indicaciones y no dejar basura"],
+    answer: 2,
+    note: "¡Muy bien! Cuidar las rutas, los muros y el entorno protege la historia para futuras visitas."
+  }
 ];
-let questionIndex = 0;
-let score = 0;
-const question = document.querySelector("#question");
-const answers = document.querySelector("#answers");
-const feedback = document.querySelector("#feedback");
-const nextQuestion = document.querySelector("#nextQuestion");
-const questionCount = document.querySelector("#questionCount");
-const scoreLabel = document.querySelector("#score");
+let missionIndex = 0;
+const missionStep = document.querySelector("#missionStep");
+const missionTitle = document.querySelector("#missionTitle");
+const missionOptions = document.querySelector("#missionOptions");
+const missionFeedback = document.querySelector("#missionFeedback");
+const missionNext = document.querySelector("#missionNext");
 
-function renderQuestion() {
-  const item = questions[questionIndex];
-  question.textContent = item.text;
-  questionCount.textContent = `Pregunta ${questionIndex + 1} de ${questions.length}`;
-  scoreLabel.textContent = `${score} ${score === 1 ? "acierto" : "aciertos"}`;
-  feedback.textContent = "";
-  nextQuestion.classList.add("hidden");
-  answers.innerHTML = "";
+function renderMission() {
+  const item = missionSteps[missionIndex];
+  missionStep.textContent = `Paso ${missionIndex + 1} de ${missionSteps.length} · Elige una pista`;
+  missionTitle.textContent = item.title;
+  missionFeedback.textContent = "";
+  missionNext.classList.add("hidden");
+  missionOptions.innerHTML = "";
   item.options.forEach((option, index) => {
     const button = document.createElement("button");
     button.type = "button";
     button.textContent = `${String.fromCharCode(65 + index)}. ${option}`;
-    button.addEventListener("click", () => answerQuestion(index));
-    answers.append(button);
+    button.addEventListener("click", () => answerMission(index));
+    missionOptions.append(button);
   });
 }
-function answerQuestion(selected) {
-  const item = questions[questionIndex];
-  const buttons = [...answers.children];
+function answerMission(selected) {
+  const item = missionSteps[missionIndex];
+  const buttons = [...missionOptions.children];
   buttons.forEach((button) => { button.disabled = true; });
   buttons[item.answer].classList.add("correct");
-  if (selected === item.answer) {
-    score += 1;
-    feedback.textContent = `¡Muy bien! ${item.note}`;
-  } else {
-    buttons[selected].classList.add("wrong");
-    feedback.textContent = `Casi. ${item.note}`;
-  }
-  scoreLabel.textContent = `${score} ${score === 1 ? "acierto" : "aciertos"}`;
-  nextQuestion.textContent = questionIndex === questions.length - 1 ? "Repetir reto ↻" : "Siguiente pregunta →";
-  nextQuestion.classList.remove("hidden");
+  if (selected !== item.answer) buttons[selected].classList.add("wrong");
+  missionFeedback.textContent = selected === item.answer ? item.note : `Observa de nuevo la imagen. ${item.note}`;
+  missionNext.textContent = missionIndex === missionSteps.length - 1 ? "Repetir misión ↻" : "Siguiente pista →";
+  missionNext.classList.remove("hidden");
 }
-nextQuestion.addEventListener("click", () => {
-  if (questionIndex === questions.length - 1) { questionIndex = 0; score = 0; }
-  else questionIndex += 1;
-  renderQuestion();
+missionNext.addEventListener("click", () => {
+  missionIndex = missionIndex === missionSteps.length - 1 ? 0 : missionIndex + 1;
+  renderMission();
 });
 
 goTo(0);
-renderQuestion();
+renderMission();
